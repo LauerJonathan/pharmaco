@@ -1,26 +1,20 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const connectDB = require("./config/db");
-const routes = require("./routes");
-const errorHandler = require("./middleware/errorMiddleware");
 
-dotenv.config();
+dotenv.congig();
 
 const app = express();
-
-// Connexion à la base de données
-connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api", routes);
-
-// Gestionnaire d'erreurs
-app.use(errorHandler);
+app.use("/api/products", require("./routes/productRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/sales", require("./routes/saleRoutes"));
 
 const PORT = process.env.PORT || 5000;
 
