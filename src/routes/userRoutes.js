@@ -1,7 +1,6 @@
 const express = require("express");
-const router = express.Router();
+const userRouter = express.Router();
 const { protect, authorize } = require("../middleware/authMiddleware");
-
 const {
   register,
   login,
@@ -13,20 +12,20 @@ const {
 } = require("../controllers/userController");
 
 // Routes publiques
-router.post("/register", register);
-router.post("/login", login);
+userRouter.post("/register", register);
+userRouter.post("/login", login);
 
 // Routes protégées
-router.use(protect);
+userRouter.use(protect);
 
 // Routes pour tous les utilisateurs authentifiés
-router.get("/profile", getProfile);
-router.put("/profile", updateProfile);
+userRouter.get("/profile", getProfile);
+userRouter.put("/profile", updateProfile);
 
 // Routes admin uniquement
-router.use(authorize("admin"));
-router.get("/users", getUsers);
-router.put("/users/:id", updateUser);
-router.delete("/users/:id", deleteUser);
+userRouter.use(authorize("admin"));
+userRouter.get("/users", getUsers);
+userRouter.put("/:id", updateUser);
+userRouter.delete("/:id", deleteUser);
 
-module.exports = router;
+module.exports = userRouter;
